@@ -41,9 +41,9 @@ export default function CreateAccount() {
   // 2. Submit handler
   function onSubmit(values: z.infer<typeof formSchema>) {
     toast({
-      title: `Account ${values.username} created successfully`,
+      title: `${values.username} linked successfully`,
     });
-    router.push("/business-portal/create-business-identity");
+    router.push("/business-portal/dashboard");
   }
   return (
     <div className="px-10 py-20">
@@ -57,13 +57,10 @@ export default function CreateAccount() {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Registered Business Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John123" {...field} />
+                  <Input placeholder="Beyond Native Media" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This will be your login username.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -72,9 +69,9 @@ export default function CreateAccount() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Registration Number (UEN)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Password" {...field} />
+                  <Input placeholder="5337882W" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -84,9 +81,12 @@ export default function CreateAccount() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Registered Business Activity</FormLabel>
                 <FormControl>
-                  <Input placeholder="john@gmail.com" {...field} />
+                  <Input
+                    placeholder="Integrated Marketing Communication"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,7 +98,7 @@ export default function CreateAccount() {
         </form>
       </Form>
       <MainButton
-        text="Link Business Identity"
+        text="Go to dashboard"
         onClick={() => document.getElementById("submitButton")?.click()}
       />
       <BackButton onClick={() => router.back()} />

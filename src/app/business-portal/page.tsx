@@ -5,6 +5,7 @@ import WebApp from "@twa-dev/sdk";
 import { MainButton } from "@twa-dev/sdk/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { BackButton } from "@twa-dev/sdk/react";
 
 export default function BusinessPortalHome() {
   const router = useRouter();
@@ -30,8 +31,9 @@ export default function BusinessPortalHome() {
       </div>
       <MainButton
         text="Create Account"
-        onClick={() => router.push("/create-account")}
+        onClick={() => router.push("/business-portal/create-account")}
       />
+      <BackButton onClick={() => router.back()} />
     </div>
   );
 }
