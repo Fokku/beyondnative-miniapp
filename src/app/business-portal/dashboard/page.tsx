@@ -17,6 +17,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 import { Input } from "@/components/ui/input";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,8 +36,76 @@ const formSchema = z.object({
 export default function dashboard() {
   const router = useRouter();
   return (
-    <div className="px-2">
-      <div className="flex flex-row"></div>
+    //Header
+    <div className="px-2 bg-[#F3F3F3] h-full">
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-5 px-4 pt-10 bg-[#FBFBFB] rounded-lg w-full h-44">
+          <div className="">
+            <p className="text-xs text-left">Welcome Back!</p>
+            <p className="text-xl font-semibold text-left">Heiriq Lee</p>
+          </div>
+          <div className="">
+            <p className="text-xs text-left font-medium">
+              Beyond Native Singapore
+            </p>
+            <p className="text-xs text-left text-[#828282]">
+              Marketing Director
+            </p>
+          </div>
+        </div>
+        <Carousel opts={{}}>
+          <CarouselContent className="-ml-4">
+            <CarouselItem className="pl-4">
+              <div className="flex flex-col bg-white border border-[#E0E0E0] p-4 justify-left gap-2 w-56 h-32 rounded-lg">
+                <p className="text-sm font-semibold">Title</p>
+                <p className="text-3xl font-bold">$45,678.90</p>
+                <p className="text-xs font-medium text-[#828282]">
+                  +20% month over month
+                </p>
+              </div>
+            </CarouselItem>
+            <CarouselItem className="pl-4">
+              <div className="flex flex-col bg-white border border-[#E0E0E0] p-4 justify-left gap-2 w-56 h-32 rounded-lg">
+                <p className="text-sm font-semibold">Title</p>
+                <p className="text-3xl font-bold">$45,678.90</p>
+                <p className="text-xs font-medium text-[#828282]">
+                  +20% month over month
+                </p>
+              </div>
+            </CarouselItem>
+            <CarouselItem className="pl-4">
+              <div className="flex flex-col bg-white border border-[#E0E0E0] p-4 justify-left gap-2 w-56 h-32 rounded-lg">
+                <p className="text-sm font-semibold">Title</p>
+                <p className="text-3xl font-bold">$45,678.90</p>
+                <p className="text-xs font-medium text-[#828282]">
+                  +20% month over month
+                </p>
+              </div>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+        <div className="flex flex-col bg-white border border-[#E0E0E0] px-4 py-2 justify-left gap-2 w-full rounded-lg">
+          <p className="text-sm font-medium">Recent</p>
+          <div className="w-full flex items-center">
+            <div className="size-8 bg-black rounded-full mr-2"></div>
+            <div className="grow-1 w-full justify-left align-middle">
+              <p className="font-medium text-sm">Talent Labs</p>
+            </div>
+            <div className="size-8 bg-black"></div>
+          </div>
+          <div className="w-full flex items-center">
+            <div className="size-8 bg-black rounded-xl mr-2"></div>
+            <div className="grow-1 w-full justify-left align-middle">
+              <p className="font-medium text-sm">Talent Labs</p>
+            </div>
+            <div className="size-8 bg-black"></div>
+          </div>
+        </div>
+        {/*Main section - Activities*/}
+        <div className="h-full flex flex-col">
+          <div></div>
+        </div>
+      </div>
       <MainButton text="Return to start" onClick={() => router.push("/")} />
       <BackButton onClick={() => router.back()} />
     </div>
