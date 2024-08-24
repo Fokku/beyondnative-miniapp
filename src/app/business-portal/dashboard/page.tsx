@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { ArrowRight, User } from "lucide-react";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -36,10 +37,9 @@ const formSchema = z.object({
 export default function dashboard() {
   const router = useRouter();
   return (
-    //Header
-    <div className="px-2 bg-[#F3F3F3] h-full">
+    <div className="px-2 bg-[#F3F3F3] h-screen">
       <div className="flex flex-col gap-2">
-        <div className="flex flex-col gap-5 px-4 pt-10 bg-[#FBFBFB] rounded-lg w-full h-44">
+        <div className="flex flex-col gap-5 px-4 pt-10 bg-[#FBFBFB] rounded-b-lg w-full h-44">
           <div className="">
             <p className="text-xs text-left">Welcome Back!</p>
             <p className="text-xl font-semibold text-left">Heiriq Lee</p>
@@ -84,21 +84,26 @@ export default function dashboard() {
             </CarouselItem>
           </CarouselContent>
         </Carousel>
+
+        {/* Section - Recent*/}
+
         <div className="flex flex-col bg-white border border-[#E0E0E0] px-4 py-2 justify-left gap-2 w-full rounded-lg">
-          <p className="text-sm font-medium">Recent</p>
+          <span className="text-sm font-medium">Recent</span>
           <div className="w-full flex items-center">
-            <div className="size-8 bg-black rounded-full mr-2"></div>
+            <User size={32} className="mr-2" />
             <div className="grow-1 w-full justify-left align-middle">
-              <p className="font-medium text-sm">Talent Labs</p>
+              <span className="font-medium text-sm">
+                Add your business identity
+              </span>
             </div>
-            <div className="size-8 bg-black"></div>
+            <ArrowRight size={32} />
           </div>
           <div className="w-full flex items-center">
-            <div className="size-8 bg-black rounded-xl mr-2"></div>
+            <User size={32} className="mr-2" />
             <div className="grow-1 w-full justify-left align-middle">
-              <p className="font-medium text-sm">Talent Labs</p>
+              <p className="font-medium text-sm">Create a job listing</p>
             </div>
-            <div className="size-8 bg-black"></div>
+            <ArrowRight size={32} />
           </div>
         </div>
         {/*Main section - Activities*/}
@@ -106,7 +111,7 @@ export default function dashboard() {
           <div></div>
         </div>
       </div>
-      <MainButton text="Return to start" onClick={() => router.push("/")} />
+      {/* <MainButton text="Return to start" onClick={() => router.push("/")} /> */}
       <BackButton onClick={() => router.back()} />
     </div>
   );

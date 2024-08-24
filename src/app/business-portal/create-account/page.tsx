@@ -23,10 +23,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  username: z.string().min(5, {
+    message: "Username must be at least 5 characters.",
   }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+  email: z.string().email({
+    message: "Invalid email.",
+  }),
+  telegramID: z.number(),
+  telegramUsername: z.string(),
 });
+
+const telegramUser = {
+  telegramId: WebApp.initDataUnsafe.user?.id,
+  telegramUsername: WebApp.initDataUnsafe.user?.username,
+};
 
 export default function CreateAccount() {
   const router = useRouter();
@@ -36,10 +49,26 @@ export default function CreateAccount() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      telegramID: telegramUser.telegramId,
+      telegramUsername: telegramUser.telegramUsername,
     },
   });
   // 2. Submit handler
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const res = await fetch("/api/Users", {
+      method: "POST",
+      body: JSON.stringify({ FormData: values }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.status !== 201) {
+      toast({
+        title: "Error",
+        description: "An error occurred",
+      });
+      return;
+    }
     toast({
       title: `Account ${values.username} created successfully`,
     });
@@ -92,7 +121,11 @@ export default function CreateAccount() {
               </FormItem>
             )}
           />
-          <Button id="submitButton" type="submit" className="w-full hidden">
+          <Button
+            id="submitButton"
+            type="submit"
+            className="w-full hidden lg:block"
+          >
             Submit
           </Button>
         </form>

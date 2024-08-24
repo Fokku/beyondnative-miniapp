@@ -1,14 +1,38 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import WebApp from "@twa-dev/sdk";
 import { MainButton } from "@twa-dev/sdk/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { BackButton } from "@twa-dev/sdk/react";
+import { Button } from "@/components/ui/button";
 
 export default function BusinessPortalHome() {
   const router = useRouter();
+  let hasAccount = false;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("/api/Users");
+        if (response.ok) {
+          const user = await response.json();
+          if (user.telegramID) {
+            hasAccount = true;
+          }
+          // Do something with the user object
+        } else {
+          // Handle error response
+        }
+      } catch (error) {
+        // Handle fetch error
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   return (
     <div className="px-10 py-20">
       <div className="flex flex-col justify-center">
@@ -29,6 +53,10 @@ export default function BusinessPortalHome() {
           />
         </div>
       </div>
+      <Button
+        className="hidden lg:block"
+        onClick={() => router.push("/business-portal/create-account")}
+      ></Button>
       <MainButton
         text="Create Account"
         onClick={() => router.push("/business-portal/create-account")}
