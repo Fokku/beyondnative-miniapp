@@ -37,7 +37,7 @@ const formSchema = z.object({
 export default function dashboard() {
   const router = useRouter();
   return (
-    <div className="px-2 bg-[#F3F3F3] h-screen">
+    <div className="px-2 bg-[#F3F3F3] h-full">
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-5 px-4 pt-10 bg-[#FBFBFB] rounded-b-lg w-full h-44">
           <div className="">

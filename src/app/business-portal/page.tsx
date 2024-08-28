@@ -43,7 +43,7 @@ export default function BusinessPortalHome() {
     fetchUser();
   }, [userObj]);
 
-  if (hasAccount) {
+  if (!hasAccount) {
     return (
       <div className="px-10 py-20">
         <div className="flex flex-col justify-center">
@@ -76,6 +76,7 @@ export default function BusinessPortalHome() {
       </div>
     );
   } else {
-    return <div>Welcome, {userObj.telegramUsername}</div>;
+    router.push("/business-portal/dashboard");
+    return <div>Welcome.</div>;
   }
 }
