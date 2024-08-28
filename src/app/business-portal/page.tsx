@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import WebApp from "@twa-dev/sdk";
 import { MainButton } from "@twa-dev/sdk/react";
 import { useRouter } from "next/navigation";
@@ -10,10 +10,11 @@ import { Button } from "@/components/ui/button";
 
 export default function BusinessPortalHome() {
   const router = useRouter();
-  let hasAccount = false;
-  const [userObj, setUserObj] = React.useState(null);
+  const [hasAccount, setHasAccount] = useState(false);
+  const [userObj, setUserObj] = useState(null);
 
   useEffect(() => {
+    console.log("useEffect called");
     const fetchUser = async () => {
       console.log("fetching user");
       try {
@@ -27,21 +28,20 @@ export default function BusinessPortalHome() {
         if (response.ok) {
           const user = await response.json();
           setUserObj(user);
-          if (user.telegramID) {
-            hasAccount = true;
+          if (user.telegramID == WebApp.initDataUnsafe.user?.id) {
+            setHasAccount(true);
           }
           // Do something with the user object
         } else {
-          // Handle error response
+          console.log(response);
         }
       } catch (error) {
         console.log(error);
         // Handle fetch error
       }
     };
-
     fetchUser();
-  }, [userObj]);
+  }, []);
 
   if (!hasAccount) {
     return (
