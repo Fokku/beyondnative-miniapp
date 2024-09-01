@@ -1,47 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import WebApp from "@twa-dev/sdk";
 import { MainButton } from "@twa-dev/sdk/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { BackButton } from "@twa-dev/sdk/react";
 import { Button } from "@/components/ui/button";
+import { UserObjProvider } from "./layout";
+import { Users } from "../(models)/User";
 
 export default function BusinessPortalHome() {
   const router = useRouter();
-  const [hasAccount, setHasAccount] = useState(false);
-  const [userObj, setUserObj] = useState(null);
-
-  useEffect(() => {
-    console.log("useEffect called");
-    const fetchUser = async () => {
-      console.log("fetching user");
-      try {
-        const response = await fetch("/api/Users", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        console.log(response);
-        if (response.ok) {
-          const user = await response.json();
-          setUserObj(user);
-          if (user.telegramID == WebApp.initDataUnsafe.user?.id) {
-            setHasAccount(true);
-          }
-          // Do something with the user object
-        } else {
-          console.log(response);
-        }
-      } catch (error) {
-        console.log(error);
-        // Handle fetch error
-      }
-    };
-    fetchUser();
-  }, []);
+  const userObj: Users | undefined = useContext(UserObjProvider)?.user;
+  const hasAccount = userObj?.telegramID == WebApp.initDataUnsafe.user?.id;
 
   if (!hasAccount) {
     return (
@@ -53,7 +25,10 @@ export default function BusinessPortalHome() {
         </div>
         <div className="flex flex-col justify-center justify-items-center mt-20">
           <div className="text-center p-10">
-            looks like you&apos;re new, let&apos;s set up your account.
+            Hi{" "}
+            {userObj?.telegramUsername ||
+              "@" + WebApp.initDataUnsafe.user?.username}
+            , looks like you&apos;re new, let&apos;s set up your account.
           </div>
           <div className="w-48 h-48 overflow-clip self-center rounded-2xl">
             <Image

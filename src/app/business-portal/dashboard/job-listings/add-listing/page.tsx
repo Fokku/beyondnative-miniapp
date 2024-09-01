@@ -23,17 +23,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 const formSchema = z.object({
-  username: z.string().min(5, {
-    message: "Username must be at least 5 characters.",
+  name: z.string(),
+  title: z.string().min(10, {
+    message: "Title must be at least 10 characters.",
   }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-  email: z.string().email({
-    message: "Invalid email.",
-  }),
-  telegramID: z.number(),
-  telegramUsername: z.string(),
+  description: z.string(),
+  company: z.string(),
+  reach: z.number(),
+  application: z.number(),
+  shortlisted: z.number(),
 });
 
 const telegramUser = {
@@ -41,23 +39,25 @@ const telegramUser = {
   telegramUsername: WebApp.initDataUnsafe.user?.username,
 };
 
-export default function CreateAccount() {
+export default function addListings() {
   const router = useRouter();
 
   // 1. Form declaration.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
-      telegramID: telegramUser.telegramId ? telegramUser.telegramId : 0,
-      telegramUsername: telegramUser.telegramUsername
-        ? telegramUser.telegramUsername
-        : "",
+      name: "",
+      title: "",
+      description: "",
+      company: "",
+      reach: 100,
+      application: 10,
+      shortlisted: 1,
     },
   });
   // 2. Submit handler
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await fetch("/api/Users", {
+    const res = await fetch("/api/Users/addlistings", {
       method: "POST",
       body: JSON.stringify({ FormData: values }),
       headers: {
@@ -72,52 +72,64 @@ export default function CreateAccount() {
       return;
     }
     toast({
-      title: `Account ${values.username} created successfully`,
+      title: `Listing created successfully`,
     });
-    router.push("/business-portal/create-business-identity");
+    router.push("/business-portal/job-listings");
   }
   return (
     <div className="px-10 py-20">
       <Form {...form}>
         <form
-          id="create-account-form"
+          id="addListingForm"
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8"
         >
           <FormField
-            name="username"
+            name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Internal Listing Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John123" {...field} />
+                  <Input placeholder="Listing1" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This will be your login username.
+                  This will be your internal listing name for reference.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
-            name="password"
+            name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Listing Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Password" {...field} />
+                  <Input placeholder="Banquet Server at MBS" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
-            name="email"
+            name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Input placeholder="john@gmail.com" {...field} />
+                  <Input placeholder="15/hr Event Crew at mBS" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="company"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company</FormLabel>
+                <FormControl>
+                  <Input placeholder="Acme Inc" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -133,7 +145,7 @@ export default function CreateAccount() {
         </form>
       </Form>
       <MainButton
-        text="Link Business Identity"
+        text="Submit"
         onClick={() => document.getElementById("submitButton")?.click()}
       />
       <BackButton onClick={() => router.back()} />

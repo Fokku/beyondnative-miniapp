@@ -1,6 +1,9 @@
+"use client";
 import { JobCard, JobCardProps } from "@/components/JobCard";
 import { Button } from "@/components/ui/button";
+import { BackButton } from "@twa-dev/sdk/react";
 import { Plus, PlusCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function jobListings() {
   const jobList: JobCardProps = {
@@ -8,6 +11,7 @@ export default function jobListings() {
     title: "Banquet Server - MBS",
     company: "Acme Pte Ltd",
   };
+  const router = useRouter();
   return (
     <div className="flex flex-col h-full pb-16">
       <div className="flex flex-col px-4 pt-10 bg-[#FBFBFB] rounded-b-lg w-full h-44">
@@ -33,9 +37,13 @@ export default function jobListings() {
         className="fixed bottom-[76px] right-4 rounded-full p-1 h-14 w-14 shadow-md"
         variant="default"
         size="icon"
+        onClick={() =>
+          router.push("/business-portal/dashboard/job-listings/add-listing")
+        }
       >
         <Plus className="text-white size-8" />
       </Button>
+      <BackButton />
     </div>
   );
 }

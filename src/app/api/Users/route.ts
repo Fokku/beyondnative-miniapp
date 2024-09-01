@@ -1,5 +1,5 @@
 import User from "../../(models)/User";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: any) {
   try {
@@ -16,19 +16,17 @@ export async function POST(req: any) {
     return NextResponse.json({ message: "Error", error }, { status: 500 });
   }
 }
-export async function GET(req: any) {
+export async function GET(req: NextRequest) {
   try {
-    const { telegramId } = req.query;
-    const user = await User.findOne({ telegramId });
+    const telegramId = req.nextUrl.searchParams.get("telegramId");
+    console.log(telegramId);
+    const user = await User.findOne({ telegramID: telegramId });
     if (user) {
       return NextResponse.json({ user }, { status: 200 });
     } else {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
   } catch (error) {
-    return NextResponse.json(
-      { message: "Something went wrong", error },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Error", error }, { status: 500 });
   }
 }

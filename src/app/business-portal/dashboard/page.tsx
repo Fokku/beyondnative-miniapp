@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import WebApp from "@twa-dev/sdk";
 import { BackButton, MainButton } from "@twa-dev/sdk/react";
 import { useRouter } from "next/navigation";
@@ -23,10 +23,12 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Input } from "@/components/ui/input";
+import { UserObjProvider } from "../layout";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ArrowRight, User } from "lucide-react";
+import { Users } from "@/app/(models)/User";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -35,6 +37,7 @@ const formSchema = z.object({
 });
 
 export default function dashboard() {
+  const userObj: Users = useContext(UserObjProvider)?.user;
   const router = useRouter();
   return (
     <div className="px-2 bg-[#F3F3F3] h-full">
@@ -42,12 +45,12 @@ export default function dashboard() {
         <div className="flex flex-col gap-5 px-4 pt-10 bg-[#FBFBFB] rounded-b-lg w-full h-44">
           <div className="">
             <p className="text-xs text-left">Welcome Back!</p>
-            <p className="text-xl font-semibold text-left">Heiriq Lee</p>
+            <p className="text-xl font-semibold text-left">
+              {userObj.telegramUsername}
+            </p>
           </div>
           <div className="">
-            <p className="text-xs text-left font-medium">
-              Beyond Native Singapore
-            </p>
+            <p className="text-xs text-left font-medium">Acme Inc</p>
             <p className="text-xs text-left text-[#828282]">
               Marketing Director
             </p>
@@ -57,7 +60,7 @@ export default function dashboard() {
           <CarouselContent className="-ml-4">
             <CarouselItem className="pl-4">
               <div className="flex flex-col bg-white border border-[#E0E0E0] p-4 justify-left gap-2 w-56 h-32 rounded-lg">
-                <p className="text-sm font-semibold">Title</p>
+                <p className="text-sm font-semibold">Example data</p>
                 <p className="text-3xl font-bold">$45,678.90</p>
                 <p className="text-xs font-medium text-[#828282]">
                   +20% month over month
@@ -66,7 +69,7 @@ export default function dashboard() {
             </CarouselItem>
             <CarouselItem className="pl-4">
               <div className="flex flex-col bg-white border border-[#E0E0E0] p-4 justify-left gap-2 w-56 h-32 rounded-lg">
-                <p className="text-sm font-semibold">Title</p>
+                <p className="text-sm font-semibold">Example Data</p>
                 <p className="text-3xl font-bold">$45,678.90</p>
                 <p className="text-xs font-medium text-[#828282]">
                   +20% month over month
@@ -75,7 +78,7 @@ export default function dashboard() {
             </CarouselItem>
             <CarouselItem className="pl-4">
               <div className="flex flex-col bg-white border border-[#E0E0E0] p-4 justify-left gap-2 w-56 h-32 rounded-lg">
-                <p className="text-sm font-semibold">Title</p>
+                <p className="text-sm font-semibold">Example Data</p>
                 <p className="text-3xl font-bold">$45,678.90</p>
                 <p className="text-xs font-medium text-[#828282]">
                   +20% month over month
