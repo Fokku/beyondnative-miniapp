@@ -21,16 +21,23 @@ import { Input } from "@/components/ui/input";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { ChevronDown } from "lucide-react";
 
 const formSchema = z.object({
-  username: z.string().min(5, {
-    message: "Username must be at least 5 characters.",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
+  fullName: z.string().min(5, {
+    message: "Name must be at least 5 characters.",
   }),
   email: z.string().email({
     message: "Invalid email.",
+  }),
+  mobile: z.string().min(8, {
+    message: "Invalid number.",
+  }),
+  username: z.string().min(3, {
+    message: "Username must be at least 3 characters.",
+  }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
   }),
   telegramID: z.number(),
   telegramUsername: z.string(),
@@ -77,7 +84,15 @@ export default function CreateAccount() {
     router.push("/business-portal/create-business-identity");
   }
   return (
-    <div className="px-10 py-20">
+    <div className="px-10 py-10">
+      <div className="flex w-full justify-between mb-10">
+        <div className="text-start text-base font-medium">
+          Account Information
+        </div>
+        <div className="flex items-center">
+          <ChevronDown />
+        </div>
+      </div>
       <Form {...form}>
         <form
           id="create-account-form"
@@ -85,27 +100,24 @@ export default function CreateAccount() {
           className="space-y-8"
         >
           <FormField
-            name="username"
+            name="fullName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Full Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John123" {...field} />
+                  <Input placeholder="John Teo" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This will be your login username.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
-            name="password"
+            name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="Password" {...field} />
+                  <Input placeholder="sollku" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -123,19 +135,39 @@ export default function CreateAccount() {
               </FormItem>
             )}
           />
-          <Button
-            id="submitButton"
-            type="submit"
-            className="w-full hidden lg:block"
-          >
-            Submit
+          <FormField
+            name="mobile"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Mobile Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="8423 9810" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input placeholder="Password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button id="submitButton" type="submit" className="w-full lg:block">
+            Create Account
           </Button>
         </form>
       </Form>
-      <MainButton
+      {/* <MainButton
         text="Link Business Identity"
         onClick={() => document.getElementById("submitButton")?.click()}
-      />
+      /> */}
       <BackButton onClick={() => router.back()} />
     </div>
   );

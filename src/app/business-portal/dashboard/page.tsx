@@ -37,7 +37,7 @@ const formSchema = z.object({
 });
 
 export default function dashboard() {
-  const userObj: Users = useContext(UserObjProvider)?.user;
+  const userObj: Users = useContext(UserObjProvider)?.user || {};
   const router = useRouter();
   return (
     <div className="px-2 bg-[#F3F3F3] h-full">

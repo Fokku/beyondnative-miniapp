@@ -19,12 +19,20 @@ export default function jobListings() {
           <p className="text-xl font-semibold text-left">Your Listings</p>
         </div>
         <div className="flex mt-11 text-left justify-start">
-          <Button variant="ghost" size="sm">
-            <span className="text-sm font-medium">Active</span>
-          </Button>
-          <Button variant="ghost" size="sm">
-            <span className="text-sm font-medium">Inactive</span>
-          </Button>
+          <div className="group">
+            <Button variant="ghost" size="sm" className="">
+              <span className="text-sm font-medium group-focus:font-bold group-focus:underline">
+                Active
+              </span>
+            </Button>
+          </div>
+          <div className="group">
+            <Button variant="ghost" size="sm" className="">
+              <span className="text-sm font-medium group-focus:font-bold group-focus:underline">
+                Inactive
+              </span>
+            </Button>
+          </div>
         </div>
       </div>
       <div>
